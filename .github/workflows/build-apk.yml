@@ -22,7 +22,7 @@ jobs:
 
       - name: Extract Android project ZIP
         run: |
-          unzip -o "iLauncher_iOS_Android_Source fixed 1.zip" -d project
+         unzip -o "iLauncher_iOS_Android_Source_FIXED-1.zip" -d project
           find project -name settings.gradle.kts -print
 
       - name: Set up Gradle
