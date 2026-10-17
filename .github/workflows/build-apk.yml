@@ -1,0 +1,44 @@
+
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Extract Android project ZIP
+        run: |
+          unzip -o "iLauncher_iOS_Android_Source fixed 1.zip" -d project
+          find project -name settings.gradle.kts -print
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Build APK
+        run: |
+          PROJECT_DIR="$(dirname "$(find project -name settings.gradle.kts -print -quit)")"
+          cd "$PROJECT_DIR"
+          gradle assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: iLauncher-debug-apk
+          path: project/**/app/build/outputs/apk/debu
+          g/*.apk
