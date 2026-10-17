@@ -40,5 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: iLauncher-debug-apk
-          path: project/**/app/build/outputs/apk/debu
-          g/*.apk
+          path: project/**/app/build/outputs/apk/debug/*.apk
